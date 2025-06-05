@@ -99,7 +99,7 @@ export const styles = StyleSheet.create({
     marginBottom: 8,
   },
   balanceAmount: {
-    fontSize: 32,
+    fontSize: 24,
     fontWeight: "bold",
     color: COLORS.text,
     marginBottom: 20,
@@ -261,4 +261,16 @@ export const styles = StyleSheet.create({
   transactionsListContent: {
     paddingBottom: 20,
   },
+  balanceStatAmountpostive: {
+    fontSize: 32,
+    fontWeight: "bold",
+    color: COLORS.income,
+    marginBottom: 20,
+  },
+  balanceStatAmountNegative: {
+    fontSize: 32,
+    fontWeight: "bold",
+    color: COLORS.expense,
+    marginBottom: 20,
+  }
 });

@@ -50,6 +50,9 @@ export default function Page() {
       ]
     );
   };
+  if (isLoading) {
+    return <PageLoader />;
+  }
 
   return (
     <View style={styles.container}>

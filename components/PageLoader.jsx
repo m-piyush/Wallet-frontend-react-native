@@ -5,7 +5,7 @@ import { COLORS } from "../constants/Colors";
 
 const PageLoader = () => {
   return (
-    <View style={styles.loaderContainer}>
+    <View style={styles.loadingContainer}>
       <ActivityIndicator size="large" color={COLORS.primary} />
     </View>
   );
