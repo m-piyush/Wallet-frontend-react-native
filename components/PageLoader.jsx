@@ -3,7 +3,7 @@ import { View, ActivityIndicator } from "react-native";
 import { styles } from "../assets/style/home.styles";
 import { COLORS } from "../constants/Colors";
 
-function PageLoader() {
+const PageLoader = () => {
   return (
     <View style={styles.loaderContainer}>
       <ActivityIndicator size="large" color={COLORS.primary} />

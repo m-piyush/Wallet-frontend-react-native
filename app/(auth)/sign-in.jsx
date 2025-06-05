@@ -90,7 +90,7 @@ export default function Page() {
         </TouchableOpacity>
         <View style={styles.footerContainer}>
           <Text style={styles.footerText}>Don&apos;t have an account?</Text>
-          <TouchableOpacity onPress={() => router.back()}>
+          <TouchableOpacity onPress={() => router.push("/sign-up")}>
             <Text style={styles.linkText}>Sign up</Text>
           </TouchableOpacity>
         </View>

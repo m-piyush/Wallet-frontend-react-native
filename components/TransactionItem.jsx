@@ -22,10 +22,10 @@ const TransactionItem = ({ item, onDelete }) => {
   return (
     <View style={styles.transactionCard} key={item.id}>
       <TouchableOpacity style={styles.transactionContent}>
-        <View style={styles.transactionIconContainer}>
+        <View style={styles.categoryIconContainer}>
           <Iconicon
             name={iconName}
-            size={20}
+            size={22}
             color={isIncome ? COLORS.income : COLORS.expense}
           />
         </View>
@@ -44,7 +44,7 @@ const TransactionItem = ({ item, onDelete }) => {
             {Math.abs(parseFloat(item.amount)).toFixed(2)}
           </Text>
           <Text style={styles.transactionDate}>
-            {formatDate(item.createdAt)}
+            {formatDate(item.created_at)}
           </Text>
         </View>
       </TouchableOpacity>

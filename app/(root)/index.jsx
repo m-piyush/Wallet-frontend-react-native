@@ -4,27 +4,36 @@ import {
   Alert,
   FlatList,
   Image,
+  RefreshControl,
   Text,
   TouchableOpacity,
   View,
+
 } from "react-native";
 import { SignOutButton } from "../../components/SignOutButton";
 import { useTransations } from "../../hooks/useTransations";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PageLoader from "../../components/PageLoader";
 import { styles } from "../../assets/style/home.styles";
 import Iconicon from "react-native-vector-icons/Ionicons";
 import TransactionItem from "../../components/TransactionItem";
 import NoTransactionsFound from "../../components/NoTransactionsFound";
 import BalanceCard from "../../components/BalanceCard";
-
 import { useRouter } from "expo-router";
+
 export default function Page() {
   const { user } = useUser();
   const router = useRouter();
-  const { transation, summary, isLoading, loadData, deleteTransaction } =
+  const { transations, summary, isLoading, loadData, deleteTransaction } =
     useTransations(user?.id);
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await loadData();
+    setRefreshing(false);
+  }
   useEffect(() => {
     loadData();
   }, [loadData]);
@@ -41,10 +50,6 @@ export default function Page() {
       ]
     );
   };
-  console.log("summary", summary);
-  console.log("transation", transation);
-
-  // if (isLoading) return <PageLoader />;
 
   return (
     <View style={styles.container}>
@@ -56,7 +61,7 @@ export default function Page() {
             style={styles.headerLogo}
             resizeMode="contain"
           />
-          <View stylle={styles.welcomeContainer}>
+          <View style={styles.welcomeContainer}>
             <Text style={styles.welcomeText}>Welcome,</Text>
             <Text style={styles.usernameText}>
               {user?.emailAddresses[0]?.emailAddress.split("@")[0]}
@@ -85,11 +90,13 @@ export default function Page() {
       <FlatList
         style={styles.transactionsList}
         contentContainerStyle={styles.transactionsListContent}
-        data={transation}
+        data={transations}
         renderItem={({ item }) => (
           <TransactionItem item={item} onDelete={handleDelete} />
         )}
         ListEmptyComponent={<NoTransactionsFound />}
+        showsVerticalScrollIndicator={false}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       />
     </View>
   );

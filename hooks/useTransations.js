@@ -1,8 +1,9 @@
 import { useCallback, useState } from "react";
 import { Alert } from "react-native";
+import { AOI_URL } from "../constants/api";
+
 export const useTransations = (userId) => {
-  const AOI_URL = "https://wallet-backend-react-native.onrender.com/api";
-  const [transation, setTransation] = useState([]);
+  const [transations, setTransations] = useState([]);
   const [summary, setSummary] = useState({
     balance: 0,
     income: 0,
@@ -14,7 +15,7 @@ export const useTransations = (userId) => {
     try {
       const response = await fetch(`${AOI_URL}/transactions/${userId}`);
       const data = await response.json();
-      setTransation(data);
+      setTransations(data);
     } catch (error) {
       console.error("Error fetching transactions:", error);
     }
@@ -23,7 +24,7 @@ export const useTransations = (userId) => {
     try {
       const response = await fetch(`${AOI_URL}/transactions/summary/${userId}`);
       const data = await response.json();
-      setTransation(data);
+      setSummary(data);
     } catch (error) {
       console.error("Error fetching summary:", error);
     }
@@ -36,8 +37,7 @@ export const useTransations = (userId) => {
     setIsLoading(true);
     try {
       await Promise.all([fetchTransactions(), fetchSummary()]);
-      const data = await response.json();
-      setTransation(data);
+
     } catch (error) {
       console.error("Error fetching loadData:", error);
     } finally {
@@ -45,22 +45,25 @@ export const useTransations = (userId) => {
     }
   }, [fetchTransactions, fetchSummary, userId]);
 
-  const deleteTransaction = async () => {
+  const deleteTransaction = async (id) => {
     try {
-      const response = awaitfetch(`${AOI_URL}/transactions/${userId}`, {
+      const response = await fetch(`${AOI_URL}/transactions/${id}`, {
         method: "DELETE",
       });
+      if (!response.ok) {
+        throw new Error("Failed to delete transaction");
+      }
 
       loadData();
       Alert.alert("Success", "Transaction deleted successfully");
     } catch (error) {
-      console.error("Error deleting transaction:", error);
+      console.error("Error deleting usetransaction:", error);
       Alert.alert("Error", error.message || "Failed to delete transaction");
     }
   };
 
   return {
-    transation,
+    transations,
     summary,
     isLoading,
     loadData,
